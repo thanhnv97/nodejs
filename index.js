@@ -11,7 +11,7 @@ app.get("/", function (req, res) {
   res.send("Hello World");
 });
 
-app.get("/webhook", function (req, res) {
+app.post("/webhook", function (req, res) {
   res.json(req.body);
 });
 
