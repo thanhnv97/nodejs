@@ -1,0 +1,19 @@
+{
+  "name": "nodejs-api",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/thanhnv25/nodejs-api.git",
+  "author": "thanhnv2 <thanhnv2@vnext.com.vn>",
+  "license": "MIT",
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  },
+  "dependencies": {
+    "body-parser": "^1.19.1",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.2"
+  },
+  "scripts": {
+    "start": "nodemon index.js"
+  }
+}
