@@ -14,7 +14,7 @@ app.get("/", function (req, res) {
 });
 
 app.post("/webhook", function (req, res) {
-  console.log("req.body)::>>", req.body);
+  console.log("req.body)::>>", req);
   res.json(req.body);
 });
 
