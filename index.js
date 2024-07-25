@@ -9,7 +9,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 app.get("/", function (req, res) {
-  console.log("Hello World::>>");
+  console.log("Hello World1::>>");
   res.send("Hello World");
 });
 
