@@ -7,14 +7,6 @@ const port = process.env.PORT || 3000;
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.use(bodyParser.text());
-
-app.use((req, res, next) => {
-    if (req.headers['content-encoding'] === 'utf-8') {
-        delete req.headers['content-encoding'];
-    }
-    next();
-});
 
 app.get("/", function (req, res) {
   console.log("Hello World11::>>");
@@ -22,9 +14,8 @@ app.get("/", function (req, res) {
 });
 
 app.post("/webhook", function (req, res) {
-  console.log("req.headers)::>>", req.headers);
   console.log("req.body)::>>", req.body);
-  return "1"
+  res.send("Receive data successfully");
 });
 
 
