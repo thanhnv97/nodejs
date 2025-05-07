@@ -5,21 +5,19 @@ const { json } = require("body-parser");
 require("dotenv").config();
 const port = process.env.PORT || 3000;
 
+// Middleware body-parser cho JSON
+app.use(bodyParser.json());
 
-// app.use(bodyParser.urlencoded({ extended: false }));
-// app.use(bodyParser.json());
-// app.use(bodyParser.text({defaultCharset: 'utf-8'}));
+// Middleware body-parser cho URL-encoded data
+app.use(bodyParser.urlencoded({ 
+    extended: true  // Cho phép parse các nested objects
+}));
 
-// parse various different custom JSON types as JSON
-app.use(bodyParser.json({ type: 'application/*+json' }))
+// Middleware body-parser cho raw data
+app.use(bodyParser.raw());
 
-// parse some custom thing into a Buffer
-app.use(bodyParser.raw({ type: 'application/vnd.custom-type' }))
-
-// parse an HTML body into a string
-app.use(bodyParser.text({ type: 'text/html' }))
-
-app.use(express.json()); // Middleware to parse JSON bodies
+// Middleware body-parser cho text
+app.use(bodyParser.text());
 
 app.get("/", function (req, res) {
   res.send("Hello World");
