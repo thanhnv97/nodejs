@@ -7,14 +7,15 @@ const port = process.env.PORT || 3000;
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use(bodyParser.text());
 
-app.use((req, res, next) => {
-    console.log('req.headers', req)
-    if (req.headers['Content-Encoding'] === 'UTF-8') {
-        delete req.headers['Content-Encoding'];
-    }
-    next();
-});
+// app.use((req, res, next) => {
+//     console.log('req.headers', req)
+//     if (req.headers['Content-Encoding'] === 'UTF-8') {
+//         delete req.headers['Content-Encoding'];
+//     }
+//     next();
+// });
 
 app.get("/", function (req, res) {
   res.send("Hello World");
