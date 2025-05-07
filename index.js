@@ -8,6 +8,11 @@ const port = process.env.PORT || 3000;
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
+app.use(function (req, res, next) {
+  delete req.headers['content-encoding']
+  next()
+})
+
 app.get("/", function (req, res) {
   console.log("Hello World11::>>");
   res.send("Hello World");
