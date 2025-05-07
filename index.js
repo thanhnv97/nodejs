@@ -5,13 +5,12 @@ const { json } = require("body-parser");
 require("dotenv").config();
 const port = process.env.PORT || 3000;
 
-app.use((req, res, next) => {
-    console.log('req.headers', req)
-    if (req.headers['Content-Encoding'] === 'UTF-8') {
-        delete req.headers['Content-Encoding'];
-    }
-    next();
-});
+// app.use((req, res, next) => {
+//     if (req.headers['Content-Encoding'] === 'UTF-8') {
+//         delete req.headers['Content-Encoding'];
+//     }
+//     next();
+// });
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
