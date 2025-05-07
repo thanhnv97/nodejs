@@ -5,19 +5,24 @@ const { json } = require("body-parser");
 require("dotenv").config();
 const port = process.env.PORT || 3000;
 
-// Middleware body-parser cho JSON
-app.use(bodyParser.json());
-
-// Middleware body-parser cho URL-encoded data
-app.use(bodyParser.urlencoded({ 
-    extended: true  // Cho phép parse các nested objects
+// Cấu hình mở rộng cho body-parser
+app.use(bodyParser.json({
+    // Bỏ qua việc kiểm tra encoding
+    verify: (req, res, buf, encoding) => {
+        req.rawBody = buf.toString();
+    },
+    type: [
+        'application/json', 
+        'text/plain', 
+        'application/x-www-form-urlencoded'
+    ]
 }));
 
-// Middleware body-parser cho raw data
-app.use(bodyParser.raw());
-
-// Middleware body-parser cho text
-app.use(bodyParser.text());
+app.use(bodyParser.urlencoded({ 
+    extended: true,
+    // Bỏ qua các ràng buộc về encoding
+    parameterLimit: 1000000 
+}));
 
 app.get("/", function (req, res) {
   res.send("Hello World");
