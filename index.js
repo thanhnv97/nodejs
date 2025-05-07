@@ -5,9 +5,16 @@ const { json } = require("body-parser");
 require("dotenv").config();
 const port = process.env.PORT || 3000;
 
-// app.use(bodyParser.urlencoded({ extended: true }));
-// app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+app.use(bodyParser.text());
 
+app.use((req, res, next) => {
+    if (req.headers['content-encoding'] === 'utf-8') {
+        delete req.headers['content-encoding'];
+    }
+    next();
+});
 
 app.get("/", function (req, res) {
   console.log("Hello World11::>>");
@@ -20,12 +27,7 @@ app.post("/webhook", function (req, res) {
   return
 });
 
-app.use((req, res, next) => {
-    if (req.headers['content-encoding'] === 'utf-8') {
-        delete req.headers['content-encoding'];
-    }
-    next();
-});
+
 
 app.use(function (req, res) {
   res.status(404).send({ url: req.originalUrl + " not found" });
