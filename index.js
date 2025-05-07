@@ -5,47 +5,27 @@ const { json } = require("body-parser");
 require("dotenv").config();
 const port = process.env.PORT || 3000;
 
-const urlNotEncodedParser = function(req, res, next)
-{
-  rawBody = '';
 
-  req.on('data', function(chunk) {
-       rawBody += chunk;
+// app.use(bodyParser.urlencoded({ extended: false }));
+// app.use(bodyParser.json());
+// app.use(bodyParser.text({defaultCharset: 'utf-8'}));
 
-       if (rawBody.length > 1e6) requereqst.connection.destroy();
-       });
+// parse various different custom JSON types as JSON
+app.use(bodyParser.json({ type: 'application/*+json' }))
 
-  req.on('end', function() {
-       req.rawBody = JSON.parse(rawBody);
-       next();
-       });
-};
+// parse some custom thing into a Buffer
+app.use(bodyParser.raw({ type: 'application/vnd.custom-type' }))
 
-app.use((req, res, next) => {
-  console.log('req', req.data)
-    if (req.headers['Content-Encoding'] === 'UTF-8') {
-        delete req.headers['Content-Encoding'];
-    }
-    next();
-});
-
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
-app.use(bodyParser.text({defaultCharset: 'utf-8'}));
+// parse an HTML body into a string
+app.use(bodyParser.text({ type: 'text/html' }))
 
 app.get("/", function (req, res) {
   res.send("Hello World");
 });
 
-app.post("/webhook", urlNotEncodedParser, function (req, res) {
+app.post("/webhook", function (req, res) {
   console.log("req.body)::>>", req.body);
   res.send("Receive data successfully");
-});
-
-
-
-app.use(function (req, res) {
-  res.status(404).send({ url: req.originalUrl + " not found" });
 });
 
 app.listen(port);
