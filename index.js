@@ -9,7 +9,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 app.use((req, res, next) => {
-    console.log('req.headers', req.headers)
+    console.log('req.headers', req)
     if (req.headers['Content-Encoding'] === 'UTF-8') {
         delete req.headers['Content-Encoding'];
     }
