@@ -5,6 +5,22 @@ const { json } = require("body-parser");
 require("dotenv").config();
 const port = process.env.PORT || 3000;
 
+const urlNotEncodedParser = function(req, res, next)
+{
+  rawBody = '';
+
+  req.on('data', function(chunk) {
+       rawBody += chunk;
+
+       if (rawBody.length > 1e6) requereqst.connection.destroy();
+       });
+
+  req.on('end', function() {
+       req.rawBody = JSON.parse(rawBody);
+       next();
+       });
+};
+
 app.use((req, res, next) => {
   console.log('req', req.data)
     if (req.headers['Content-Encoding'] === 'UTF-8') {
@@ -21,7 +37,7 @@ app.get("/", function (req, res) {
   res.send("Hello World");
 });
 
-app.post("/webhook", function (req, res) {
+app.post("/webhook", urlNotEncodedParser, function (req, res) {
   console.log("req.body)::>>", req.body);
   res.send("Receive data successfully");
 });
