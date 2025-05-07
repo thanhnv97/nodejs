@@ -5,8 +5,8 @@ const { json } = require("body-parser");
 require("dotenv").config();
 const port = process.env.PORT || 3000;
 
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+// app.use(bodyParser.urlencoded({ extended: true }));
+// app.use(bodyParser.json());
 
 
 app.get("/", function (req, res) {
