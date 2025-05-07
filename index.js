@@ -8,8 +8,14 @@ const port = process.env.PORT || 3000;
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
+app.use((req, res, next) => {
+    if (req.headers['Content-Encoding'] === 'UTF-8') {
+        delete req.headers['Content-Encoding'];
+    }
+    next();
+});
+
 app.get("/", function (req, res) {
-  console.log("Hello World11::>>");
   res.send("Hello World");
 });
 
