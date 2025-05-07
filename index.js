@@ -5,6 +5,8 @@ const { json } = require("body-parser");
 require("dotenv").config();
 const port = process.env.PORT || 3000;
 
+app.use(express.json());
+
 app.get("/", function (req, res) {
   res.send("Hello World");
 });
