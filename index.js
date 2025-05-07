@@ -5,23 +5,35 @@ const { json } = require("body-parser");
 require("dotenv").config();
 const port = process.env.PORT || 3000;
 
-// Cấu hình mở rộng cho body-parser
+// Middleware xử lý đa dạng
+app.use((req, res, next) => {
+    // Xử lý các vấn đề encoding
+    req.headers['content-type'] = req.headers['content-type'] || 'application/json';
+    
+    // Loại bỏ encoding không hợp lệ
+    if (req.headers['content-encoding'] === 'utf-8') {
+        delete req.headers['content-encoding'];
+    }
+    if (req.headers['Content-Encoding'] === 'UTF-8') {
+        delete req.headers['Content-Encoding'];
+    }
+
+    next();
+});
+
+// Cấu hình body-parser linh hoạt
 app.use(bodyParser.json({
-    // Bỏ qua việc kiểm tra encoding
-    verify: (req, res, buf, encoding) => {
-        req.rawBody = buf.toString();
-    },
     type: [
         'application/json', 
         'text/plain', 
         'application/x-www-form-urlencoded'
-    ]
+    ],
+    limit: '10mb'
 }));
 
 app.use(bodyParser.urlencoded({ 
     extended: true,
-    // Bỏ qua các ràng buộc về encoding
-    parameterLimit: 1000000 
+    limit: '10mb'
 }));
 
 app.get("/", function (req, res) {
